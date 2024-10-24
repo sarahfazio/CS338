@@ -1,1 +1,0 @@
-In order for this to work you need to make a file that returns the reddit connection from the praw library.
