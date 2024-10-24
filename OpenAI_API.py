@@ -2,7 +2,7 @@ import json
 import os
 from openai import OpenAI
 
-profile_json = {"user1":
+example_profile = {"user1":
 {
   "username": "minecraft_builder123",
   "account_info": {
@@ -487,27 +487,29 @@ profile_json = {"user1":
 }
 }
 
-profile_string = json.dumps(profile_json)
+def summarize_gaming_activity(profile_data):
+  profile_string = json.dumps(profile_data)
 
-# Define the prompt
-question = profile_string + "Using the inputted json of multiple reddit users profiles above, for each user return a list of 5 games and 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
+  # Define the prompt
+  question = profile_string + "Using the inputted json of multiple reddit users profiles above, for each user return a list of 5 games and 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
 
 
-# Make the API call
-client = OpenAI(
-    # This is the default and can be omitted
-    api_key="Enter Here",
-)
+  # Make the API call
+  client = OpenAI(
+      # This is the default and can be omitted
+      api_key="insert_here",
+  )
 
-chat_completion = client.chat.completions.create(
-    messages=[
-        {
-            "role": "user",
-            "content": question,
-        }
-    ],
-    model="gpt-4o",
-)
+  chat_completion = client.chat.completions.create(
+      messages=[
+          {
+              "role": "user",
+              "content": question,
+          }
+      ],
+      model="gpt-4o",
+  )
+  return chat_completion.choices[0].message.content
 
 # Print the response
-print("Answer:", chat_completion.choices[0].message.content)
+#print("Answer:", summarize_gaming_activity(example_profile))
