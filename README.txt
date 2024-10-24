@@ -1,1 +1,1 @@
-In order for this to work you need to make a file that returns the reddit connection from the praw library.
+in order to run this, navigate the main project directory and run `python reddit_api.py`
