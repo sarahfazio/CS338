@@ -488,16 +488,16 @@ example_profile = {"user1":
 }
 
 def summarize_gaming_activity(profile_data):
-  profile_string = json.dumps(profile_data)
+  #profile_string = json.dumps(profile_data)
 
   # Define the prompt
-  question = profile_string + "Using the inputted json of multiple reddit users profiles above, for each user return a list of 5 games and 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
-
+  # question = profile_string + "Using the inputted json of multiple reddit users profiles above, for each user return a list of 5 games and 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
+  question = str(profile_data) + " Using the inputted json of multiple reddit users profiles above, for each user return a list of up to 5 games the user definitely plays and 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
 
   # Make the API call
   client = OpenAI(
       # This is the default and can be omitted
-      api_key="insert_here",
+      api_key="",
   )
 
   chat_completion = client.chat.completions.create(
