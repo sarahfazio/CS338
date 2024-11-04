@@ -8,6 +8,7 @@ in order to run this, navigate the main project directory and run `python reddit
 
 
 How to run the chrome extension:
+- in the directory, run `python app.py`
 - go to chrome://extensions/
-- click load unpacked to add the "Extension" directory
-- run the extension
+- click load unpacked to add the entire directory ( you may need to delete an pycache files)
+- go to a reddit url 
