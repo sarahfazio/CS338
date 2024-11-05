@@ -497,7 +497,7 @@ def summarize_gaming_activity(profile_data):
   # Make the API call
   client = OpenAI(
       # This is the default and can be omitted
-      api_key="",
+      api_key="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",
   )
 
   chat_completion = client.chat.completions.create(
