@@ -1,6 +1,7 @@
 import json
 import os
 from openai import OpenAI
+from api_connections import open_ai_key
 
 example_profile = {"user1":
 {
@@ -497,7 +498,7 @@ def summarize_gaming_activity(profile_data):
   # Make the API call
   client = OpenAI(
       # This is the default and can be omitted
-      api_key="",
+      api_key= open_ai_key(),
   )
 
   chat_completion = client.chat.completions.create(

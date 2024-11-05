@@ -62,7 +62,7 @@ document.getElementById("analyze-button").addEventListener("click", () => {
                 document.body.append(loadingMessage);
     
                 try {
-                    const response = await fetch(`http://127.0.0.1:5000/subreddit-analysis?subreddit=${result.name}`)
+                    const response = await fetch(`http://127.0.0.1:5000/subreddit-analysis?subreddit=${result.name}&sort=${result.sort}`)
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }

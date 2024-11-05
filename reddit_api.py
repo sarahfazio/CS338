@@ -1,6 +1,6 @@
 import praw
 import numpy
-import reddit_connection
+from api_connections import reddit_connection
 from OpenAI_API import summarize_gaming_activity
 import time
 
@@ -15,7 +15,14 @@ def scrape_reddit(num_subreddit_posts, num_user_posts, sort = "hot", subreddit_n
 
     users = []  # List to hold user dictionaries
 
-    for submission in subreddit.top(limit=num_subreddit_posts):
+    if sort == "hot":
+        subreddit_submissions = subreddit.hot(limit=num_subreddit_posts)
+    elif sort == "top":
+        subreddit_submissions = subreddit.top()
+    elif sort == "new":
+        subreddit_submissions = subreddit.new(limit=num_subreddit_posts)
+
+    for submission in subreddit_submissions:
         user_info = {}
         
         # Check if the author exists

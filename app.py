@@ -21,11 +21,12 @@ def subredditAnalysis():
 
     #TODO: handle case where we are not on a subreddit nor user page
     subreddit_name = request.args.get('subreddit')
+    sort= request.args.get('sort')
 
-    print(f"Analyzing the {subreddit_name} subreddit")
+    print(f"Analyzing the {subreddit_name} subreddit sorting by {sort}")
     
 
-    user_data = scrape_reddit(10, 30, sort = "hot", subreddit_name = subreddit_name)
+    user_data = scrape_reddit(10, 30, sort = sort, subreddit_name = subreddit_name)
     res = summarize_gaming_activity(user_data)
     return jsonify({"message": res})
 
