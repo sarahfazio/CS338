@@ -4,7 +4,7 @@ from api_connections import reddit_connection
 from OpenAI_API import summarize_gaming_activity
 import time
 
-reddit = reddit_connection.connection()
+reddit = reddit_connection()
 
 def scrape_reddit(num_subreddit_posts, num_user_posts, sort = "hot", subreddit_name = "Minecraft"):
     #subreddit_name = input("Input the name of the subreddit you're interested in: ")
