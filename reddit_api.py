@@ -6,8 +6,8 @@ import time
 
 reddit = reddit_connection.connection()
 
-def scrape_reddit(num_subreddit_posts, num_user_posts):
-    subreddit_name = input("Input the name of the subreddit you're interested in: ")
+def scrape_reddit(num_subreddit_posts, num_user_posts, sort = "hot", subreddit_name = "Minecraft"):
+    #subreddit_name = input("Input the name of the subreddit you're interested in: ")
     before = time.time()
 
     # TODO: input validation
@@ -28,7 +28,12 @@ def scrape_reddit(num_subreddit_posts, num_user_posts):
 
             # Fetch top submissions from the user
             user_submissions = []
-            submissions = list(redditor1.submissions.top(limit=num_user_posts))
+            if sort == "hot":
+                submissions = list(redditor1.submissions.hot(limit=num_user_posts))
+            if sort == "top":
+                submissions = list(redditor1.submissions.top(limit=num_user_posts))
+            if sort == "new":
+                submissions = list(redditor1.submissions.new(limit=num_user_posts))
             for user_submission in submissions:
                 user_submissions.append({
                     'title': user_submission.title,

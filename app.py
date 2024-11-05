@@ -18,10 +18,16 @@ def index():
 
 @app.route('/subreddit-analysis', methods = ["GET"])
 def subredditAnalysis():
-    print("Analyzing Subreddit")
-    user_data = scrape_reddit(10, 30)
+
+    #TODO: handle case where we are not on a subreddit nor user page
+    subreddit_name = request.args.get('subreddit')
+
+    print(f"Analyzing the {subreddit_name} subreddit")
+    
+
+    user_data = scrape_reddit(10, 30, sort = "hot", subreddit_name = subreddit_name)
     res = summarize_gaming_activity(user_data)
-    return str(res)
+    return jsonify({"message": res})
 
 
 
