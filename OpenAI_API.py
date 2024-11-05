@@ -492,8 +492,7 @@ def summarize_gaming_activity(profile_data):
 
   # Define the prompt
   # question = profile_string + "Using the inputted json of multiple reddit users profiles above, for each user return a list of 5 games and 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
-  question = str(profile_data) + " Using the inputted json of multiple reddit users profiles above, for each user return a list of up to 5 games the user definitely plays and 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
-
+  question = str(profile_data) + " Using the inputted json of multiple reddit users profiles above, for each user return a list of up to 5 games the user definitely plays and 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'. Use this outputted json and select only one user that best matches the profile below based on the similarity between the games they play and game genres they play returning the list of users in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'. {User3: {Games: [Minecraft, Rocket League, Stardew Valley], Game Genres: [Sandbox, Building/Construction, Action]}}"
   # Make the API call
   client = OpenAI(
       # This is the default and can be omitted
