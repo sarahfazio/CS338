@@ -15,6 +15,7 @@ def scrape_reddit(num_subreddit_posts, num_user_posts, sort = "hot", subreddit_n
 
     users = []  # List to hold user dictionaries
 
+    subreddit_submissions = subreddit.hot(limit=num_subreddit_posts)
     if sort == "hot":
         subreddit_submissions = subreddit.hot(limit=num_subreddit_posts)
     elif sort == "top":
@@ -35,6 +36,7 @@ def scrape_reddit(num_subreddit_posts, num_user_posts, sort = "hot", subreddit_n
 
             # Fetch top submissions from the user
             user_submissions = []
+            submissions = list(redditor1.submissions.hot(limit=num_user_posts))
             if sort == "hot":
                 submissions = list(redditor1.submissions.hot(limit=num_user_posts))
             if sort == "top":

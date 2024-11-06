@@ -41,11 +41,7 @@ document.getElementById("analyze-button").addEventListener("click", () => {
                 outputElement.append(loadingMessage);
 
                 try {
-<<<<<<< HEAD
-                    const response = await fetch(`http://127.0.0.1:5000/subreddit-analysis?subreddit=${result.name}&sort=${result.sort}`)
-=======
                     const response = await fetch(`http://127.0.0.1:5000/subreddit-analysis?subreddit=${result.name}`);
->>>>>>> 44c0ac8 (Added frontend)
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
@@ -56,10 +52,10 @@ document.getElementById("analyze-button").addEventListener("click", () => {
                     let textData = await response.text();
                     textData = textData.replace(/```json|```/g, ''); // Remove any markdown artifacts
 
-                    // Ensure displayData is parsed as an object
+                    // Parse finalData as JSON if it's still a string
                     let displayData = JSON.parse(textData);
-
-                    console.log("Parsed Display Data:", displayData); // Confirm the structure
+                    
+                    console.log("Final Parsed Display Data:", displayData); // Confirm the structure
 
                     // Pass the correctly parsed data to formatJson
                     outputElement.appendChild(formatJson(displayData));
