@@ -1,17 +1,13 @@
 function getRedditInfo(url) {
-    // Use URL constructor for easy parsing
     const parsedUrl = new URL(url);
-    
-    // Check the pathname for subreddit or user
     const pathSegments = parsedUrl.pathname.split('/').filter(segment => segment);
-    console.log(pathSegments)
+    console.log(pathSegments);
     
     if (pathSegments.length >= 2) {
-        
-        const type = pathSegments[0]; // This should be either 'r' or 'u'
-        const name = pathSegments[1]; // The actual subreddit or username
-        var sort = ""
-        var time = ""
+        const type = pathSegments[0];
+        const name = pathSegments[1];
+        let sort = "";
+        let time = "";
 
         if (pathSegments.length >= 3) {
             sort = pathSegments[2];
@@ -20,69 +16,62 @@ function getRedditInfo(url) {
             }
         }
         
-        
         if (type === 'r') {
-            return {
-                type: 'subreddit',
-                name: name,
-                sort: sort
-            };
+            return { type: 'subreddit', name, sort };
         } else if (type === 'user') {
-            return {
-                type: 'user',
-                name: name,
-                sort: sort
-            };
+            return { type: 'user', name, sort };
         }
     }
     
-    return null; // Return null if not a valid subreddit/user URL
+    return null;
 }
-
 
 document.getElementById("analyze-button").addEventListener("click", () => {
     chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
-        const currentTab = tabs[0]; // Get the first tab from the result
+        const currentTab = tabs[0];
         if (currentTab) {
-            const urlElement = document.getElementById("url");
-            urlElement.textContent = currentTab.url; // Display the URL
-            
-            result = getRedditInfo(currentTab.url)
-            console.log(result)
-    
-            // If this is a subreddit
-            if (result.type == "subreddit") {
-                const subredditElement = document.createElement("p");
-                subredditElement.textContent = "You're on the " + result.name + " subreddit.";
-                document.body.append(subredditElement);
-    
-                // Add a loading indicator
+            const result = getRedditInfo(currentTab.url);
+            const outputElement = document.getElementById("output");
+            outputElement.innerHTML = ''; // Clear previous output
+
+            if (result && result.type === "subreddit") {
+                // Display loading message
                 const loadingMessage = document.createElement("p");
                 loadingMessage.textContent = "Loading subreddit analysis...";
-                document.body.append(loadingMessage);
-    
+                outputElement.append(loadingMessage);
+
                 try {
+<<<<<<< HEAD
                     const response = await fetch(`http://127.0.0.1:5000/subreddit-analysis?subreddit=${result.name}&sort=${result.sort}`)
+=======
+                    const response = await fetch(`http://127.0.0.1:5000/subreddit-analysis?subreddit=${result.name}`);
+>>>>>>> 44c0ac8 (Added frontend)
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    //Remove loading message
-                    loadingMessage.remove();
-    
-                    const data = await response.json(); 
-                    document.body.append(data.message);
-                    console.log(data);
-    
+
+                    loadingMessage.remove(); // Remove loading message
+                    
+                    // Fetch response as text, clean it, and parse it
+                    let textData = await response.text();
+                    textData = textData.replace(/```json|```/g, ''); // Remove any markdown artifacts
+
+                    // Ensure displayData is parsed as an object
+                    let displayData = JSON.parse(textData);
+
+                    console.log("Parsed Display Data:", displayData); // Confirm the structure
+
+                    // Pass the correctly parsed data to formatJson
+                    outputElement.appendChild(formatJson(displayData));
+                    
                 } catch (error) {
-                    console.error("Error: ", error)
-    
+                    console.error("Error details:", error);
+                    outputElement.textContent = "An error occurred while fetching data: " + error.message;
                 }
                 
-            } else if (result.type == "user") {
-                subredditElement.textContent = "You're on the profile of " + result.name + ".";
-                document.body.append(subredditElement);
+            } else {
+                outputElement.textContent = "This feature is for subreddits only or the page format is invalid.";
             }
-            
         }
-      });
     });
+});

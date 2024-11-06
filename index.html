@@ -1,10 +1,17 @@
 <html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Me</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
   <body>
-    <h1>Current URL</h1>
-    <p id="url"></p>
-    <button id = "analyze-button">Analyze this subreddit.</button>
-
+    <div class="container">
+        <h1>Social Me</h1>
+        <button id="analyze-button" class="analyze-button">Analyze This Subreddit</button>
+        <div id="output" class="output"></div>
+    </div>
     <script src="url.js"></script>
     <script src="popup.js"></script>
-  </body>
+</body>
 </html>

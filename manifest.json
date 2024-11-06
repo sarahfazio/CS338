@@ -11,5 +11,6 @@
   "action": {
     "default_popup": "index.html",
     "default_icon": "hello_extensions.png"
-  }
+  },
+  "theme_color": "#1e1e2f"
 }

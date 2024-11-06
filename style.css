@@ -1,0 +1,161 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Press Start 2P', sans-serif; /* Retro gaming font */
+}
+
+/* Main Background Styling for Entire Extension */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(145deg, #0f0c29, #302b63, #24243e); /* Dark gradient background */
+    color: #e0e0e0;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: none;
+}
+
+/* Popup Container Styling with Rounded Corners */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(145deg, #0f0c29, #302b63, #24243e); /* Same gradient */
+    color: #e0e0e0;
+    min-width: 300px;
+    min-height: 200px;
+    border-radius: 5px; /* Curved corners */
+    overflow: hidden;
+    border: 2px solid #4b0082; /* Purple border to match gamer theme */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    font-family: 'Press Start 2P', sans-serif;
+}
+
+/* Header Styling */
+h1 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #39ff14; /* Neon green color */
+    text-shadow: 0px 0px 10px #39ff14, 0px 0px 20px #4b0082;
+}
+
+/* URL Display Styling */
+.url-display {
+    margin-bottom: 15px;
+    font-size: 0.85em;
+    color: #b0c4de;
+}
+
+/* Button Styling */
+.analyze-button {
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #39ff14; /* Neon green */
+    border: none;
+    border-radius: 8px; /* More pronounced rounding */
+    cursor: pointer;
+    font-weight: bold;
+    text-shadow: 0px 0px 8px #39ff14;
+    transition: transform 0.2s ease, background-color 0.3s;
+}
+
+.analyze-button:hover {
+    background-color: #32cd32; /* Slightly lighter green */
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* JSON Output Styling */
+.output {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #222831; /* Darker grey for contrast */
+    border-radius: 8px;
+    color: #c8e6c9;
+    font-size: 0.9em;
+    overflow: auto;
+    max-height: 250px; /* Increase max height for readability */
+    font-family: 'Courier New', Courier, monospace; /* Code-style font for JSON */
+    display: flex;
+    flex-direction: column;
+    white-space: pre-wrap; /* Wraps long lines */
+    word-wrap: break-word; /* Ensures long words break */
+}
+
+/* Main container for structured output */
+.json-output {
+    color: #e0e0e0;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+/* Styling for main list items */
+.json-output ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/* JSON Key-Value Styling */
+.json-key {
+    color: #66ccff; /* Light blue for JSON keys */
+}
+
+.json-value {
+    color: #ffcc99; /* Light orange for JSON values */
+}
+
+.json-value-boolean {
+    color: #ff99cc; /* Pink for booleans */
+}
+
+/* Styling for main list items */
+.main-item {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #2c2f33;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+}
+
+/* Headings for usernames */
+.list-heading {
+    font-weight: bold;
+    color: #66ccff;
+    font-size: 1.4em; /* Larger font for hierarchy */
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Sub-list styling */
+.sub-list {
+    list-style-type: none;
+    padding-left: 20px;
+    margin-top: 8px;
+}
+
+/* Styling for sub-headings (Games, Game Genres) */
+.sub-heading {
+    font-weight: bold;
+    color: #ffcc99;
+    font-size: 1.2em; /* Slightly larger for sub-categories */
+    margin-top: 8px;
+    display: block;
+}
+
+/* Array list styling for bullet points */
+.array-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 5px;
+}
+
+.array-item {
+    color: #99ff99;
+    margin-bottom: 4px;
+}
