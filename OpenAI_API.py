@@ -1,7 +1,7 @@
 import json
 import os
 from openai import OpenAI
-from api_connections import open_ai_key
+from reddit_connection import open_ai_key
 
 example_profile = {"user1":
 {
@@ -488,13 +488,15 @@ example_profile = {"user1":
 }
 }
 
+user_profile = '{"User3: {"Games": ["Minecraft", "Rocket League", "Stardew Valley", "SCP: Secret Laboratory"]], "Game Genres": ["Sandbox", "Building/Construction", "Action", "Horror"]}'
+
 def summarize_gaming_activity(profile_data):
   #profile_string = json.dumps(profile_data)
 
   # Define the prompt
   # question = profile_string + "Using the inputted json of multiple reddit users profiles above, for each user return a list of 5 games and 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
-  question = str(profile_data) + " Using the inputted json of multiple reddit users profiles above, for each user return a list of up to 5 games the user definitely plays and 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
-
+  question = str(profile_data) + " Using the inputted json of multiple reddit users profiles above, for each user return a list of up to 5 games the user definitely plays and up to 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
+  
   # Make the API call
   client = OpenAI(
       # This is the default and can be omitted
@@ -510,7 +512,19 @@ def summarize_gaming_activity(profile_data):
       ],
       model="gpt-4o",
   )
-  return chat_completion.choices[0].message.content
+
+  question2 = str(chat_completion.choices[0].message.content) + " Use this outputted json to select only the 5 users that best matches the profile below based on the similarity between the games they play and game genres they play returning the list of users in order of similarity with all the games and game genres they play in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}' " + str(user_profile)
+
+  chat_completion2 = client.chat.completions.create(
+      messages=[
+          {
+              "role": "user",
+              "content": question2,
+          }
+      ],
+      model="gpt-4o",
+  )
+  return chat_completion2.choices[0].message.content
 
 # Print the response
 #print("Answer:", summarize_gaming_activity(example_profile))

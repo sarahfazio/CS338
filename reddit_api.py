@@ -1,6 +1,6 @@
 import praw
 import numpy
-from api_connections import reddit_connection
+from reddit_connection import reddit_connection
 from OpenAI_API import summarize_gaming_activity
 import time
 
@@ -66,4 +66,5 @@ def scrape_reddit(num_subreddit_posts, num_user_posts, sort = "hot", subreddit_n
 # Example usage
 if __name__ == "__main__":
     user_data = scrape_reddit(10, 30)
-    print(summarize_gaming_activity(user_data))  # You can print or use this list as needed
+    print("__________________ NEW __________________")
+    print(summarize_gaming_activity(user_data).split("'''")[-1])  # You can print or use this list as needed
