@@ -2,6 +2,7 @@ import praw
 import numpy
 from reddit_connection import reddit_connection
 from OpenAI_API import summarize_gaming_activity
+from OpenAI_API import summarize_user_profile
 import time
 
 reddit = reddit_connection()
@@ -111,4 +112,4 @@ if __name__ == "__main__":
 
     username = "example_user"
     user_data_2 = scrape_user_posts(username, num_posts=30, sort="hot")
-    print(summarize_gaming_activity(user_data_2))
+    print(summarize_user_profile(user_data_2))
