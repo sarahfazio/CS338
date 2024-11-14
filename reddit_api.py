@@ -106,9 +106,9 @@ def scrape_user_posts(username, num_posts=30, sort="hot"):
 
 # Example usage
 if __name__ == "__main__":
-    user_data = scrape_reddit(10, 30)
-    print(summarize_gaming_activity(user_data))  # You can print or use this list as needed
+    # user_data = scrape_reddit(10, 30)
+    # print(summarize_gaming_activity(user_data))  # You can print or use this list as needed
 
-    username = "example_user"
+    username = "ShxdowStriker"
     user_data_2 = scrape_user_posts(username, num_posts=30, sort="hot")
-    print(summarize_gaming_activity(user_data_2))
+    print(user_data_2)
