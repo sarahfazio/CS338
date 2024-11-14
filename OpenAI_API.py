@@ -488,6 +488,124 @@ example_profile = {"user1":
 }
 }
 
+example_user_profile = {
+   "username":"DrDutchenfoo",
+   "submissions":[
+      {
+         "title":"Behold my army",
+         "score":476,
+         "body":"",
+         "subreddit":"Minecraft",
+         "url":"https://v.redd.it/mgaelinsqazd1"
+      },
+      {
+         "title":"Do you think the knight is actually hollow like the White Lady says here or is it also flawed?",
+         "score":670,
+         "body":"",
+         "subreddit":"HollowKnight",
+         "url":"https://i.redd.it/wjkmuza0u8gc1.png"
+      },
+      {
+         "title":"Why is Brooding Mawlek in forgotten crossroads and not ancient basin with the rest of the mawleks?",
+         "score":233,
+         "body":"",
+         "subreddit":"HollowKnight",
+         "url":"https://i.redd.it/s15z7r3houfc1.png"
+      },
+      {
+         "title":"The entire hollow knight community seeing no silksong news at the Nintendo direct:",
+         "score":248,
+         "body":"",
+         "subreddit":"HollowKnightMemes",
+         "url":"https://i.redd.it/jnl2iyvx33ha1.jpg"
+      },
+      {
+         "title":"I made and painted a mooshroom sculpture! what do you think?",
+         "score":378,
+         "body":"",
+         "subreddit":"Minecraft",
+         "url":"https://i.redd.it/coovr4yki2v91.jpg"
+      },
+      {
+         "title":"Behold, my clay sculpture of Zote the mighty [OC]",
+         "score":90,
+         "body":"",
+         "subreddit":"HollowKnight",
+         "url":"https://i.redd.it/ab0tbvggj2v91.jpg"
+      },
+      {
+         "title":"Fat dobber: rage and lightning",
+         "score":1102,
+         "body":"",
+         "subreddit":"GodofWar",
+         "url":"https://i.redd.it/6mvsaqq3tee91.jpg"
+      },
+      {
+         "title":"They never stood a chance",
+         "score":708,
+         "body":"",
+         "subreddit":"ApexOutlands",
+         "url":"https://i.redd.it/d4oc4i70af091.jpg"
+      },
+      {
+         "title":"Does stuff like this happen to anyone else, or do I just get really weird randoms",
+         "score":407,
+         "body":"",
+         "subreddit":"WattsonMains",
+         "url":"https://v.redd.it/spy5hf0qzok71"
+      },
+      {
+         "title":"Cursed scooby and shaggy",
+         "score":2522,
+         "body":"",
+         "subreddit":"Cursed_Images",
+         "url":"https://i.redd.it/ym63t4t1krj71.jpg"
+      },
+      {
+         "title":"Made Wattson my PlayStation background",
+         "score":220,
+         "body":"",
+         "subreddit":"WattsonMains",
+         "url":"https://i.redd.it/7zu1pa9ggkj71.jpg"
+      },
+      {
+         "title":"I don’t know if anyone else noticed or not, but in the “reflections” lore video apex posted Wattson is wearing a Nessie badge!",
+         "score":151,
+         "body":"",
+         "subreddit":"WattsonMains",
+         "url":"https://i.redd.it/p12a6dtlrz871.jpg"
+      },
+      {
+         "title":"But… I’m in the safe shallows… [No spoilers]",
+         "score":4264,
+         "body":"",
+         "subreddit":"subnautica",
+         "url":"https://i.redd.it/tkdavhxvf0871.jpg"
+      },
+      {
+         "title":"This is my new dog Jasper! He loves belly rubs and rolling around in grass.",
+         "score":65,
+         "body":"",
+         "subreddit":"AnimalsBeingDerps",
+         "url":"https://www.reddit.com/gallery/o9p19t"
+      },
+      {
+         "title":"I got my first 4K!",
+         "score":490,
+         "body":"",
+         "subreddit":"pathfindermains",
+         "url":"https://i.redd.it/6dk97pqanw371.jpg"
+      },
+      {
+         "title":"I guess dummies big day is back",
+         "score":149,
+         "body":"",
+         "subreddit":"apexlegends",
+         "url":"https://i.redd.it/e2p7nwdl93071.jpg"
+      }
+   ]
+}
+
 user_profile = '{"User3: {"Games": ["Minecraft", "Rocket League", "Stardew Valley", "SCP: Secret Laboratory"]], "Game Genres": ["Sandbox", "Building/Construction", "Action", "Horror"]}'
 
 def summarize_gaming_activity(profile_data):
@@ -495,7 +613,9 @@ def summarize_gaming_activity(profile_data):
 
   # Define the prompt
   # question = profile_string + "Using the inputted json of multiple reddit users profiles above, for each user return a list of 5 games and 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
-  question = str(profile_data) + " Using the inputted json of multiple reddit users profiles above, for each user return a list of up to 5 games the user definitely plays and up to 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
+  profile_array = [profile_data[:5], profile_data[5:10]]
+  question = str(profile_array[0]) + " Using the inputted json of multiple reddit users profiles above, for each user return a list of up to 5 games the user definitely plays and up to 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
+  second_question = str(profile_array[1]) + " Using the inputted json of multiple reddit users profiles above, for each user return a list of up to 5 games the user definitely plays and up to 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
   
   # Make the API call
   client = OpenAI(
@@ -513,7 +633,29 @@ def summarize_gaming_activity(profile_data):
       model="gpt-4o",
   )
 
-  question2 = str(chat_completion.choices[0].message.content) + " Use this outputted json to select only the 5 users that best matches the profile below based on the similarity between the games they play and game genres they play returning the list of users in order of similarity with all the games and game genres they play in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}' " + str(user_profile)
+  second_chat_completion = client.chat.completions.create(
+      messages=[
+          {
+              "role": "user",
+              "content": second_question,
+          }
+      ],
+      model="gpt-4o",
+  )
+
+  response = chat_completion.choices[0].message.content
+  response = json.dumps(response)
+  response = response.replace("json","")
+  response = json.loads(response)
+  response = json.loads(response[3:-3])
+  response2 = second_chat_completion.choices[0].message.content
+  response2 = json.dumps(response2)
+  response2 = response2.replace("json","")
+  response2 = json.loads(response2)
+  response2 = json.loads(response2[3:-3])
+  response.update(response2)
+
+  question2 = str(response) + " Use this outputted json to select only the 5 users that best matches the profile below based on the similarity between the games they play and game genres they play returning only a json of the list of users in order of similarity with all the games and game genres they play in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}' " + str(user_profile)
 
   chat_completion2 = client.chat.completions.create(
       messages=[
@@ -524,7 +666,42 @@ def summarize_gaming_activity(profile_data):
       ],
       model="gpt-4o",
   )
-  return chat_completion2.choices[0].message.content
+
+  match_response = chat_completion2.choices[0].message.content
+  match_response = match_response.replace("json","")
+  match_response = match_response.split("```")[1]
+  match_response = json.loads(match_response)
+
+  return match_response
 
 # Print the response
 #print("Answer:", summarize_gaming_activity(example_profile))
+
+def summarize_user_profile(profile_data):
+  profile_data = example_user_profile
+  question = str(profile_data) + "Using the inputted json of a reddit user profile above, return a list of up to 5 games the user definitely plays, up to 5 game genres the user might be interested in, a summary of the game and game types the user plays and enjoys, up to 5 interests the user has outside of gaming, and a summary of these non gaming interests in json format following this example '{Gaming: {Games: (List of names of games), Game Genres: (List of names of genres)}, Gaming Summary: (Summary of enjoyed games and game types), Non Gaming Interests: {Interests: (List of non gaming interests), Interest Summary: (Summary of non gaming interests)}}'"
+
+  # Make the API call
+  client = OpenAI(
+      # This is the default and can be omitted
+      api_key= open_ai_key(),
+  )
+
+  chat_completion = client.chat.completions.create(
+      messages=[
+          {
+              "role": "user",
+              "content": question,
+          }
+      ],
+      model="gpt-4o",
+  )
+
+  response = chat_completion.choices[0].message.content
+  response = response.replace("json","")
+  response = response.split("```")[1]
+  response = json.loads(response)
+
+  return response
+
+print(summarize_user_profile("y"))
