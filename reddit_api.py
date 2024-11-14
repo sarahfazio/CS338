@@ -63,8 +63,52 @@ def scrape_reddit(num_subreddit_posts, num_user_posts, sort = "hot", subreddit_n
     print(f"The call took {time.time() - before} seconds and returned {num_subreddit_posts * num_user_posts} submissions.")
     return users  # Return the list of users
 
+def scrape_user_posts(username, num_posts=30, sort="hot"):
+    # start timer
+    before = time.time()
+
+    user_info = {'username': username, 'submissions':[]}
+
+    try:
+        # create Redditor object
+        redditor = reddit.redditor(username)
+
+        # fetch posts from user based on sorting
+        if sort == "hot":
+            submissions = redditor.submissions.hot(limit=num_posts)
+        elif sort == "top":
+            submissions = redditor.submissions.top(limit=num_posts)
+        elif sort == "new":
+            submissions = redditor.submissions.new(limit=num_posts)
+        else:
+            print("Invalid sort option. Defaulting to 'hot'...")
+            submissions = redditor.submissions.hot(limit=num_posts)
+
+        # collect user submissions
+        for submission in submissions:
+            user_info['submissions'].append({
+                'title': submission.title,
+                'score': submission.score,
+                'body': submission.selftext,
+                'subreddit': submission.subreddit.display_name,
+                'url': submission.url
+            })
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        user_info['username'] = '[deleted]'
+        user_info['submissions'] = []
+
+    # print execution time
+    print(f"The call took {time.time() - before} seconds and return {len(user_info['submissions'])} posts.")
+    return user_info
+
+
 # Example usage
 if __name__ == "__main__":
     user_data = scrape_reddit(10, 30)
-    print("__________________ NEW __________________")
-    print(summarize_gaming_activity(user_data).split("'''")[-1])  # You can print or use this list as needed
+    print(summarize_gaming_activity(user_data))  # You can print or use this list as needed
+
+    username = "example_user"
+    user_data_2 = scrape_user_posts(username, num_posts=30, sort="hot")
+    print(summarize_gaming_activity(user_data_2))
