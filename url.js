@@ -104,7 +104,7 @@ document.getElementById("analyze-button").addEventListener("click", () => {
                         console.log("Final Parsed Display Data:", displayData); // Confirm the structure
     
                         // Pass the correctly parsed data to formatJson
-                        outputElement.appendChild(formatJson(displayData));
+                        outputElement.appendChild(formatSingleUserJson(displayData));
                         
                     } catch (error) {
                         console.error("Error details:", error);
