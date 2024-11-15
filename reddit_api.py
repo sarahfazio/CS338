@@ -1,6 +1,6 @@
 import praw
 import numpy
-from reddit_connection import reddit_connection
+from api_connections import reddit_connection
 from OpenAI_API import summarize_gaming_activity
 from OpenAI_API import summarize_user_profile
 import time

@@ -1,7 +1,7 @@
 import json
 import os
 from openai import OpenAI
-from reddit_connection import open_ai_key
+from api_connections import open_ai_key
 
 example_profile = {"user1":
 {
