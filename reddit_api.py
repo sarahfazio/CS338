@@ -16,13 +16,13 @@ def scrape_reddit(num_subreddit_posts, num_user_posts, sort = "hot", subreddit_n
 
     users = []  # List to hold user dictionaries
 
-    subreddit_submissions = subreddit.hot(limit=num_subreddit_posts)
-    if sort == "hot":
-        subreddit_submissions = subreddit.hot(limit=num_subreddit_posts)
-    elif sort == "top":
+
+    if sort == "top":
         subreddit_submissions = subreddit.top()
     elif sort == "new":
         subreddit_submissions = subreddit.new(limit=num_subreddit_posts)
+    else:
+        subreddit_submissions = subreddit.hot(limit=num_subreddit_posts)
 
     for submission in subreddit_submissions:
         user_info = {}
@@ -108,8 +108,8 @@ def scrape_user_posts(username, num_posts=30, sort="hot"):
 # Example usage
 if __name__ == "__main__":
     user_data = scrape_reddit(10, 30)
-    print(summarize_gaming_activity(user_data))  # You can print or use this list as needed
+    #print(summarize_gaming_activity(user_data))  # You can print or use this list as needed
 
     username = "ShxdowStriker"
     user_data_2 = scrape_user_posts(username, num_posts=30, sort="hot")
-    print(summarize_user_profile(user_data_2))
+    #print(summarize_user_profile(user_data_2))
