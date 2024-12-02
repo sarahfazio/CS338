@@ -85,6 +85,7 @@ document.getElementById("analyze-button").addEventListener("click", () => {
                     const loadingMessage = document.createElement("p");
                     loadingMessage.textContent = "Loading user analysis...";
                     outputElement.append(loadingMessage);
+
     
                     try {
                         const response = await fetch(`http://127.0.0.1:5000/user-analysis?username=${result.name}&sort=${result.sort}`);
@@ -104,7 +105,7 @@ document.getElementById("analyze-button").addEventListener("click", () => {
                         console.log("Final Parsed Display Data:", displayData); // Confirm the structure
     
                         // Pass the correctly parsed data to formatJson
-                        outputElement.appendChild(formatSingleUserJson(displayData));
+                        outputElement.appendChild(formatSingleUserJson(result.name, displayData));
                         
                     } catch (error) {
                         console.error("Error details:", error);

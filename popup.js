@@ -1,3 +1,36 @@
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Query the active tab when the popup opens
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const currentTab = tabs[0];
+        if (currentTab) {
+            const url = currentTab.url;
+            const result = getRedditInfo(url);
+            // Update the analyze button based on the page type
+            if (result && result.type === 'user') {
+                updateAnalyzeButtonForUserPage(true);
+            } else {
+                updateAnalyzeButtonForUserPage(false);
+            }
+        }
+    });
+});
+
+// Function to update the button state based on whether it's a user page or subreddit page
+function updateAnalyzeButtonForUserPage(isUserPage) {
+    const analyzeButton = document.getElementById("analyze-button");
+
+    if (isUserPage) {
+        // Change button text or style for user page
+        analyzeButton.textContent = "Analyze User Profile";
+        analyzeButton.classList.add("active"); // Add any styles for active state
+    } else {
+        // Default button state for subreddit page or any other page
+        analyzeButton.textContent = "Analyze This Subreddit";
+        analyzeButton.classList.remove("active"); // Remove any specific styles
+    }
+}
+
 function formatJson(data) {
     console.log("Data received by formatJson:", data); // Log the structure of data
     console.log("Data type:", typeof data);
@@ -81,12 +114,17 @@ function formatJson(data) {
     return container;
 }
 
-function formatSingleUserJson(data) {
+function formatSingleUserJson(username, data) {
     console.log("Data received by formatJson:", data); // Log the structure of data
     console.log("Data type:", typeof data);
 
     const container = document.createElement("div");
     container.className = "json-output";
+
+    const usernameHeader = document.createElement("h2"); // Create a larger header (h1)
+    usernameHeader.className = "username-header"; // Add a class for styling (optional)
+    usernameHeader.textContent = username; // Set the username as text content
+    container.appendChild(usernameHeader); // Append it to the container
 
     // If data has a "message" key, use that as the main content if it's an object
     if (data.message) {
@@ -105,107 +143,128 @@ function formatSingleUserJson(data) {
             const gamingContainer = document.createElement("div");
             gamingContainer.className = "gaming-section";
 
-            // Games Section
-            if (data.Gaming.Games && data.Gaming.Games.length > 0) {
-                const gamesHeading = document.createElement("h3");
-                gamesHeading.className = "section-heading";
-                gamesHeading.textContent = "Games:";
-                gamingContainer.appendChild(gamesHeading);
+            const gamingHeading = document.createElement("span");
+            gamingHeading.className = "list-heading";
+            gamingHeading.textContent = "Gaming";
 
-                const gamesList = document.createElement("ul");
-                gamesList.className = "array-list";
+            gamingContainer.appendChild(gamingHeading)
+
+            // Create a sub-list for Games and Game Genres
+            const subList = document.createElement("ul");
+            subList.className = "sub-list";
+
+            if (data.Gaming.Games) {
+                const gamesLi = document.createElement("li");
+                gamesLi.className = "sub-heading";
+                gamesLi.textContent = "Games:";
+
+                const gamesUl = document.createElement("ul");
+                gamesUl.className = "array-list";
 
                 data.Gaming.Games.forEach(game => {
                     const gameLi = document.createElement("li");
                     gameLi.className = "array-item";
                     gameLi.textContent = game;
-                    gamesList.appendChild(gameLi);
+                    gamesUl.appendChild(gameLi);
                 });
 
-                gamingContainer.appendChild(gamesList);
+                gamesLi.appendChild(gamesUl);
+                subList.appendChild(gamesLi);
             }
 
-            // Game Genres Section
-            if (data.Gaming["Game Genres"] && data.Gaming["Game Genres"].length > 0) {
-                const genresHeading = document.createElement("h3");
-                genresHeading.className = "section-heading";
-                genresHeading.textContent = "Game Genres:";
-                gamingContainer.appendChild(genresHeading);
+            if (data.Gaming["Game Genres"]) {
+                const genresLi = document.createElement("li");
+                genresLi.className = "sub-heading";
+                genresLi.textContent = "Game Genres:";
 
-                const genresList = document.createElement("ul");
-                genresList.className = "array-list";
+                const genresUl = document.createElement("ul");
+                genresUl.className = "array-list";
 
                 data.Gaming["Game Genres"].forEach(genre => {
                     const genreLi = document.createElement("li");
                     genreLi.className = "array-item";
                     genreLi.textContent = genre;
-                    genresList.appendChild(genreLi);
+                    genresUl.appendChild(genreLi);
                 });
 
-                gamingContainer.appendChild(genresList);
+                genresLi.appendChild(genresUl);
+                subList.appendChild(genresLi);
             }
 
-            container.appendChild(gamingContainer);
+            if(data["Gaming Summary"]) {
+                const gamingSummary = document.createElement("li");
+                gamingSummary.className = "sub-heading";
+                gamingSummary.textContent = "Gaming Summary";
+
+                const summaryUl = document.createElement("ul");
+                summaryUl.className = "array-list";
+                const summaryLi = document.createElement("li");
+                summaryLi.className = "array-item";
+                summaryLi.textContent = data["Gaming Summary"]
+                summaryUl.appendChild(summaryLi);
+                gamingSummary.appendChild(summaryUl);
+                
+                subList.appendChild(gamingSummary)
+            }
+
+            gamingContainer.appendChild(subList);
+            container.appendChild(gamingContainer);            
+            
         }
+        //Non Gaming Interests
+        if(data["Non Gaming Interests"]) {
+            const nongamingContainer = document.createElement("div");
+            nongamingContainer.className = "nongaming-section";
 
-        // Handle "Gaming Summary" section
-        if (data["Gaming Summary"]) {
-            const summarySection = document.createElement("div");
-            summarySection.className = "gaming-summary";
+            const nongamingHeading = document.createElement("span");
+            nongamingHeading.className = "list-heading";
+            nongamingHeading.textContent = "Non-Gaming Interests";
 
-            const summaryHeading = document.createElement("h3");
-            summaryHeading.textContent = "Gaming Summary:";
-            summarySection.appendChild(summaryHeading);
+            nongamingContainer.appendChild(nongamingHeading)
 
-            const summaryText = document.createElement("p");
-            summaryText.textContent = data["Gaming Summary"];
-            summarySection.appendChild(summaryText);
+            
 
-            container.appendChild(summarySection);
-        }
+            //sublist for Non Gaming section
+            const subList = document.createElement("ul");
+            subList.className = "sub-list";
 
-        // Handle "Non Gaming Interests" section
-        if (data["Non Gaming Interests"]) {
-            const interestsContainer = document.createElement("div");
-            interestsContainer.className = "non-gaming-section";
+            if (data["Non Gaming Interests"]["Interests"]) {
+                const interestsLi = document.createElement("li");
+                interestsLi.className = "sub-heading";
+                interestsLi.textContent = "Game Genres:";
 
-            // Interests Section
-            if (data["Non Gaming Interests"].Interests && data["Non Gaming Interests"].Interests.length > 0) {
-                const interestsHeading = document.createElement("h3");
-                interestsHeading.className = "section-heading";
-                interestsHeading.textContent = "Interests:";
-                interestsContainer.appendChild(interestsHeading);
+                const interestsUl = document.createElement("ul");
+                interestsUl.className = "array-list";
 
-                const interestsList = document.createElement("ul");
-                interestsList.className = "array-list";
-
-                data["Non Gaming Interests"].Interests.forEach(interest => {
-                    const interestLi = document.createElement("li");
-                    interestLi.className = "array-item";
-                    interestLi.textContent = interest;
-                    interestsList.appendChild(interestLi);
+                data["Non Gaming Interests"]["Interests"].forEach(interest => {
+                    const interestsLi = document.createElement("li");
+                    interestsLi.className = "array-item";
+                    interestsLi.textContent = interest;
+                    interestsUl.appendChild(interestsLi);
                 });
 
-                interestsContainer.appendChild(interestsList);
+                interestsLi.appendChild(interestsUl);
+                subList.appendChild(interestsLi);
             }
 
-            // Interest Summary
-            if (data["Non Gaming Interests"]["Interest summary"]) {
-                const interestSummarySection = document.createElement("div");
-                interestSummarySection.className = "interest-summary";
+            if (data["Non Gaming Interests"]["Interest Summary"]) {
+                const interestSummary = document.createElement("li");
+                interestSummary.className = "sub-heading";
+                interestSummary.textContent = "Gaming Summary";
 
-                const interestSummaryHeading = document.createElement("h3");
-                interestSummaryHeading.textContent = "Interest Summary:";
-                interestSummarySection.appendChild(interestSummaryHeading);
-
-                const interestSummaryText = document.createElement("p");
-                interestSummaryText.textContent = data["Non Gaming Interests"]["Interest summary"];
-                interestSummarySection.appendChild(interestSummaryText);
-
-                interestsContainer.appendChild(interestSummarySection);
+                const summaryUl = document.createElement("ul");
+                summaryUl.className = "array-list";
+                const summaryLi = document.createElement("li");
+                summaryLi.className = "array-item";
+                summaryLi.textContent = data["Gaming Summary"]
+                summaryUl.appendChild(summaryLi);
+                interestSummary.appendChild(summaryUl);
+                
+                subList.appendChild(interestSummary)
             }
 
-            container.appendChild(interestsContainer);
+            nongamingContainer.appendChild(subList);
+            container.appendChild(nongamingContainer);
         }
         
     } else {

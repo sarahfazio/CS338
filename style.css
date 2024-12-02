@@ -159,3 +159,10 @@ h1 {
     color: #99ff99;
     margin-bottom: 4px;
 }
+
+.username-header {
+    font-size: 2em;  /* Make the header text larger */
+    font-weight: bold;
+    text-align: center;  /* Center the text */
+    margin-bottom: 20px;  /* Add space below the header */
+}
