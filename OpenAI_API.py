@@ -652,7 +652,7 @@ def length_checker(profile_data):
   
 
 
-def summarize_gaming_activity(profile_data):
+def summarize_gaming_activity(profile_data, users_profile=user_profile):
   #profile_string = json.dumps(profile_data)
 
   # Define the prompt
@@ -699,7 +699,7 @@ def summarize_gaming_activity(profile_data):
   #response.update(response2)
   response = length_checker(profile_data)
 
-  question2 = str(response) + " Use this outputted json to select only the 5 users that best matches the profile below based on the similarity between the games they play and game genres they play returning only a json of the list of users in order of similarity with all the games and game genres they play in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}' " + str(user_profile)
+  question2 = str(response) + " Use this outputted json to select only the 5 users that best matches the profile below based on the similarity between the games they play and game genres they play returning only a json of the list of users in order of similarity with all the games and game genres they play in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}' " + str(users_profile)
 
   chat_completion2 = client.chat.completions.create(
       messages=[
