@@ -722,7 +722,7 @@ def summarize_gaming_activity(profile_data):
 #print("Answer:", summarize_gaming_activity(example_profile))
 
 def summarize_user_profile(profile_data):
-  profile_data = example_user_profile
+  #profile_data = example_user_profile
   question = str(profile_data) + "Using the inputted json of a reddit user profile above, return a list of up to 5 games the user definitely plays, up to 5 game genres the user might be interested in, a summary of the game and game types the user plays and enjoys, up to 5 interests the user has outside of gaming, and a summary of these non gaming interests in json format following this example '{Gaming: {Games: (List of names of games), Game Genres: (List of names of genres)}, Gaming Summary: (Summary of enjoyed games and game types), Non Gaming Interests: {Interests: (List of non gaming interests), Interest Summary: (Summary of non gaming interests)}}'"
 
   # Make the API call
