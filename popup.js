@@ -274,3 +274,45 @@ function formatSingleUserJson(username, data) {
 
     return container;
 }
+
+// Handler for analyzing Reddit username
+document.getElementById("username-analyze-button").addEventListener("click", async () => {
+    const username = document.getElementById("reddit-username").value.trim();
+    const outputElement = document.getElementById("output");
+    outputElement.innerHTML = ''; // Clear previous output
+
+    if (!username) {
+        alert('Please enter a Reddit username.');
+        return;
+    }
+
+    // Display loading message
+    const loadingMessage = document.createElement("p");
+    loadingMessage.textContent = "Loading user analysis...";
+    outputElement.append(loadingMessage);
+
+    try {
+        // Send a request to the Flask backend
+        const response = await fetch(`http://127.0.0.1:5000/user-analysis?username=${username}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        loadingMessage.remove(); // Remove loading message
+
+        // Fetch response as text, clean it, and parse it
+        let textData = await response.text();
+        textData = textData.replace(/```json|```/g, ''); // Remove any markdown artifacts
+
+        // Parse the response as JSON
+        const displayData = JSON.parse(textData);
+
+        console.log("Final Parsed Display Data:", displayData); // Confirm the structure
+
+        // Pass the correctly parsed data to formatSingleUserJson for rendering
+        outputElement.appendChild(formatSingleUserJson(displayData));
+    } catch (error) {
+        console.error("Error details:", error);
+        outputElement.textContent = "An error occurred while fetching user data: " + error.message;
+    }
+});

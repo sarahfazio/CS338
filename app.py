@@ -26,16 +26,21 @@ def subredditAnalysis():
     res = summarize_gaming_activity(user_data)
     return jsonify({"message": res})
 
-@app.route('/user-analysis', methods = ["GET"])
+@app.route('/user-analysis', methods=["GET"])
 def userAnalysis():
     username = request.args.get('username')
-    #sort= request.args.get('sort')
-    #print(f"Analyzing the {username } subreddit sorting by {sort}")
 
-    user_data = scrape_user_posts(username, 10, sort = "new")
-    res = summarize_user_profile(user_data)
-    return jsonify({"message": res})
+    if not username:
+        return jsonify({"error": "Username is required"}), 400
 
+    try:
+        # Fetch user data
+        user_data = scrape_user_posts(username, num_posts=10, sort="new")
+        # Summarize or process the data if needed
+        res = summarize_user_profile(user_data)
+        return jsonify({"message": res})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
