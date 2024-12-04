@@ -24,6 +24,9 @@ function updateAnalyzeButtonForUserPage(isUserPage) {
         // Change button text or style for user page
         analyzeButton.textContent = "Analyze User Profile";
         analyzeButton.classList.add("active"); // Add any styles for active state
+        document.getElementById("username-analyze-button").remove();
+        document.getElementById("reddit-username").remove();
+        document.getElementById("username-prompt").remove();
     } else {
         // Default button state for subreddit page or any other page
         analyzeButton.textContent = "Analyze This Subreddit";
