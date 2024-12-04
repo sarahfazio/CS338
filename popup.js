@@ -127,6 +127,7 @@ function formatSingleUserJson(username, data) {
     container.appendChild(usernameHeader); // Append it to the container
 
     // If data has a "message" key, use that as the main content if it's an object
+    console.log("Data received:", data);
     if (data.message) {
         try {
             data = typeof data.message === 'string' ? JSON.parse(data.message) : data.message;
@@ -293,7 +294,7 @@ document.getElementById("username-analyze-button").addEventListener("click", asy
 
     try {
         // Send a request to the Flask backend
-        const response = await fetch(`http://127.0.0.1:5000/user-analysis?username=${username}`);
+        const response = await fetch(`http://127.0.0.1:5000/user-analysis?username=${username}&stored=True`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -308,9 +309,6 @@ document.getElementById("username-analyze-button").addEventListener("click", asy
         const displayData = JSON.parse(textData);
 
         console.log("Final Parsed Display Data:", displayData); // Confirm the structure
-
-        // Pass the correctly parsed data to formatSingleUserJson for rendering
-        outputElement.appendChild(formatSingleUserJson(displayData));
     } catch (error) {
         console.error("Error details:", error);
         outputElement.textContent = "An error occurred while fetching user data: " + error.message;

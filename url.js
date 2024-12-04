@@ -88,7 +88,7 @@ document.getElementById("analyze-button").addEventListener("click", () => {
 
     
                     try {
-                        const response = await fetch(`http://127.0.0.1:5000/user-analysis?username=${result.name}&sort=${result.sort}`);
+                        const response = await fetch(`http://127.0.0.1:5000/user-analysis?username=${result.name}&stored=False`);
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
                         }
