@@ -166,3 +166,7 @@ h1 {
     text-align: center;  /* Center the text */
     margin-bottom: 20px;  /* Add space below the header */
 }
+
+.new-text {
+    margin-bottom: 20px; /* Adjust the margin as needed */
+  }

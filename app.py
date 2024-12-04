@@ -9,6 +9,10 @@ from OpenAI_API import summarize_gaming_activity, summarize_user_profile
 app = Flask(__name__)
 CORS(app)
 
+# Global path for the stored file (only one file will be stored)
+stored_file_path = "stored_data/user_profile.json"
+username_stored = False
+
 
 @app.route('/')
 def index():
@@ -27,14 +31,12 @@ def subredditAnalysis():
 
     #TODO: add check that the profile exists
     print("summarize gaming activity")
-    res = summarize_gaming_activity(user_data, get_stored_analysis().get_json())
+    res = summarize_gaming_activity(user_data, get_stored_analysis().get_json(), username_stored)
     return jsonify({"message": res})
-
-# Global path for the stored file (only one file will be stored)
-stored_file_path = "stored_data/user_profile.json"
 
 @app.route('/user-analysis', methods=["GET"])
 def userAnalysis():
+    global username_stored
     username = request.args.get('username')
     stored = request.args.get('stored')
 
@@ -54,6 +56,8 @@ def userAnalysis():
             os.makedirs(os.path.dirname(stored_file_path), exist_ok=True)
             with open(stored_file_path, 'w') as f:
                 json.dump(res, f, indent=4)
+            
+            username_stored = True
 
             return jsonify({"message": res, "stored": True})
 

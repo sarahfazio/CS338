@@ -49,7 +49,7 @@ def length_checker(profile_data):
   
 
 
-def summarize_gaming_activity(profile_data, comparison_profile=user_profile):
+def summarize_gaming_activity(profile_data, comparison_profile=user_profile, compare = True):
 
   #profile_string = json.dumps(profile_data)
 
@@ -97,7 +97,12 @@ def summarize_gaming_activity(profile_data, comparison_profile=user_profile):
   #response.update(response2)
   response = length_checker(profile_data)
 
-  question2 = str(response) + " Use this outputted json to select only the 5 users that best matches the profile below based on the similarity between the games they play and game genres they play returning only a json of the list of users in order of similarity with all the games and game genres they play in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}' " + str(comparison_profile)
+  if compare:
+    question2 = str(response) + " Use this outputted json to select only the 5 users that best matches the profile below based on the similarity between the games they play and game genres they play returning only a json of the list of users in order of similarity with all the games and game genres they play in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}' " + str(comparison_profile)
+  else:
+    print("Generating summary without stored comparison")
+    question2 = str(response) + "Using the inputted json of multiple reddit users profiles above, for each user return a list of 5 games and 5 game genres the user might be interested in in json format following this example '{user1: {Games: (List of names of games), Game Genres: (List of names of genres)}, ...}'"
+
 
   chat_completion2 = client.chat.completions.create(
       messages=[

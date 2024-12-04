@@ -287,6 +287,21 @@ document.getElementById("username-analyze-button").addEventListener("click", asy
         return;
     }
 
+    var analyzeSubredditButton = document.getElementById("analyze-button");
+
+    //Delete the input box and analyze button
+    document.getElementById("username-analyze-button").remove();
+    document.getElementById("reddit-username").remove();
+    document.getElementById("username-prompt").remove();
+
+    // Create a new text element
+    var newText = document.createElement("p");
+    newText.textContent = "Click to generate subreddit matches for " + username;
+
+    newText.classList.add("new-text");
+
+    analyzeSubredditButton.insertAdjacentElement("beforebegin", newText);
+
     // Display loading message
     const loadingMessage = document.createElement("p");
     loadingMessage.textContent = "Loading user analysis...";
@@ -295,6 +310,7 @@ document.getElementById("username-analyze-button").addEventListener("click", asy
     try {
         // Send a request to the Flask backend
         const response = await fetch(`http://127.0.0.1:5000/user-analysis?username=${username}&stored=True`);
+        
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
