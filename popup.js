@@ -235,7 +235,7 @@ function formatSingleUserJson(username, data) {
             if (data["Non Gaming Interests"]["Interests"]) {
                 const interestsLi = document.createElement("li");
                 interestsLi.className = "sub-heading";
-                interestsLi.textContent = "Non Gaming Interests:";
+                interestsLi.textContent = "Non-Gaming Interests:";
 
                 const interestsUl = document.createElement("ul");
                 interestsUl.className = "array-list";
