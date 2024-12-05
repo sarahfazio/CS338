@@ -235,7 +235,7 @@ function formatSingleUserJson(username, data) {
             if (data["Non Gaming Interests"]["Interests"]) {
                 const interestsLi = document.createElement("li");
                 interestsLi.className = "sub-heading";
-                interestsLi.textContent = "Game Genres:";
+                interestsLi.textContent = "Non Gaming Interests:";
 
                 const interestsUl = document.createElement("ul");
                 interestsUl.className = "array-list";
@@ -254,13 +254,13 @@ function formatSingleUserJson(username, data) {
             if (data["Non Gaming Interests"]["Interest Summary"]) {
                 const interestSummary = document.createElement("li");
                 interestSummary.className = "sub-heading";
-                interestSummary.textContent = "Gaming Summary";
+                interestSummary.textContent = "Interest Summary";
 
                 const summaryUl = document.createElement("ul");
                 summaryUl.className = "array-list";
                 const summaryLi = document.createElement("li");
                 summaryLi.className = "array-item";
-                summaryLi.textContent = data["Gaming Summary"]
+                summaryLi.textContent = data["Non Gaming Interests"]["Interest Summary"]
                 summaryUl.appendChild(summaryLi);
                 interestSummary.appendChild(summaryUl);
                 

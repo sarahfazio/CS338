@@ -1,23 +1,23 @@
 {
     "Gaming": {
         "Games": [
-            "Minecraft"
+            "Minecraft",
+            "Roblox",
+            "Brawlstars"
         ],
         "Game Genres": [
             "Sandbox",
-            "Survival",
-            "Adventure"
+            "Tower Defense",
+            "Action",
+            "Multiplayer"
         ]
     },
-    "Gaming Summary": "The user enjoys playing Minecraft, which is a sandbox survival game that allows for creativity and exploration. They likely appreciate open-ended gameplay with opportunities for building and exploration.",
+    "Gaming Summary": "The user is actively engaged in games like Minecraft, Roblox, and Brawlstars. They have a keen interest in sandbox and tower defense games, as well as action-oriented and multiplayer experiences. This reflects a diverse gaming interest with a preference for both creative and strategic gameplay.",
     "Non Gaming Interests": {
         "Interests": [
-            "TV shows",
-            "Novelizations",
-            "Writing",
-            "Gender identity discussions",
-            "Swedish culture"
+            "Community Events",
+            "Account Management"
         ],
-        "Interest Summary": "The user has a strong interest in TV shows, specifically in novelizing their favorite series ('Young Royals') into book format. They are engaged in writing, both in exploring storytelling and in working on their own fanfiction. Additionally, the user is involved in discussions about gender identity and expresses curiosity about Swedish culture, as seen in their interest in a Swedish show-related item."
+        "Interest Summary": "Outside of gaming, the user seems interested in community events, likely related to gaming activities, and issues regarding account management, showcasing a concern for account security and community involvement."
     }
 }
